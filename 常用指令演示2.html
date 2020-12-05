@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+	1. Angular指令
+		* Angular为HTML页面扩展的：自定义标签属性或标签
+		* 与Angular的作用域对象（scope）交互，扩展页面的动态表现力
+
+	2. 常用指令（二）
+        * ng-class: 动态应用定义的样式 {aClass:true, bClass:false}
+        * ng-style: 动态引用通过js制定的样式对象 {color:'red', background:'blue'}
+        * ng-click: 点击监听，值为函数调用，可以传$event
+        * ng-mouseenter: 鼠标移入监听，值为函数调用，可以传$event
+        * ng-mouseleave: 鼠标移出监听，值为函数调用，可以传$event
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            .evenB {
+                background-color: red;
+            }
+
+            .oddB {
+                background-color: green;
+            }
+        </style>
+    </head>
+    <body ng-app="myApp">
+        <div ng-controller="MyController">
+
+            <!-- 演示 ng-style ng-mouseenter ng-mouseleave -->
+            <div style="width: 200px; height: 200px;" ng-style="myStyle" ng-mouseenter="enter()"
+                 ng-mouseleave="leave()">
+            </div>
+
+            <!-- 演示 ng-class $odd $even -->
+            <ul>
+                <li ng-class="{oddB: $odd, evenB: $even}" ng-repeat="person in persons">
+                    {{person.username}} ---- {{person.age}}
+                </li>
+            </ul>
+        </div>
+
+        <script src="angular.js"></script>
+        <script>
+            // 模块对象
+            angular.module("myApp", [])
+                .controller('MyController', function ($scope) {
+                    $scope.myStyle = {
+                        background: 'red'
+                    }
+
+                    // 鼠标移入的事件响应函数
+                    $scope.enter = function () {
+                        this.myStyle.background = 'deepPink';
+                    }
+
+                    // 鼠标移出的事件响应函数
+                    $scope.leave = function () {
+                        this.myStyle.background = 'green';
+                    }
+
+                    // 初始化人员数据
+                    $scope.persons = [
+                        {username: 'kobe1', age: 39},
+                        {username: 'kobe2', age: 39},
+                        {username: 'kobe3', age: 39},
+                        {username: 'kobe4', age: 39},
+                        {username: 'kobe5', age: 39},
+                        {username: 'kobe6', age: 39}
+                    ]
+                })
+        </script>
+    </body>
+</html>
